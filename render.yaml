@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: motorventas-bot
+    runtime: python
+    buildCommand: ""
+    startCommand: python bot_telegram.py
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.9

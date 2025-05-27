@@ -1,0 +1,5 @@
+git init
+git add .
+git commit -m "Primer commit - bot Telegram"
+git remote add origin https://github.com/wilnba15/motorventas-telegram.git
+git push -u origin main
