@@ -5,7 +5,7 @@ from telegram.ext import CallbackContext
 
 usuarios = {}
 
-TOKEN = os.environ.get(""7865474577:AAGUqIlVJxNVqnXO_e_wHihtLEfEziSot0s"")
+TOKEN = os.environ.get("BOT_TOKEN")
 
 def start(update: Update, context: CallbackContext):
     chat_id = update.effective_chat.id
