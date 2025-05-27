@@ -66,9 +66,8 @@ def procesar(update: Update, context: CallbackContext):
         elif texto == "4":
             update.message.reply_text(
                 "Aquí tienes algunos contenidos que pueden ayudarte:\n"
-                "📘 eBook gratuito: https://example.com/ebook\n"
-                "🎥 Testimonio de cliente: https://example.com/testimonio\n"
-                "🌐 Blog: https://example.com/blog"
+                "📘 eBook gratuito: https://drive.google.com/file/d/1VCqn50grfCdWAGcXYJmBhcIilgbrSdE4/view\n"
+                "🌐 Blog: https://www.motorenventas.com/"
             )
         elif texto == "5":
             usuarios[chat_id]["estado"] = "esperando_contacto"
