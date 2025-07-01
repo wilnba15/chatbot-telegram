@@ -34,7 +34,7 @@ def procesar(update: Update, context: CallbackContext):
             "Digita: 1,2,3,4 o 5 segun lo que necesitas"
         )
 
-    if texto in ["menu", "inicio"]:
+    if texto in ["menú","menu", "inicio"]:
         usuarios[chat_id]["estado"] = "inicio"
         update.message.reply_text(mostrar_menu())
     elif estado == "inicio":
