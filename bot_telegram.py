@@ -2,6 +2,8 @@ import os
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 from telegram import Update
 from telegram.ext import CallbackContext
+from flask import Flask
+import threading
 
 usuarios = {}
 
@@ -12,7 +14,6 @@ def start(update: Update, context: CallbackContext):
     usuarios[chat_id] = {"estado": "inicio", "datos": {}}
     update.message.reply_text("¡Hola! Soy el Asistente Virtual de Motor en Ventas 🚗\nEscribe 'menu' para comenzar.")
 
-#####
 def procesar(update: Update, context: CallbackContext):
     chat_id = update.effective_chat.id
     texto = update.message.text.strip().lower()
@@ -31,10 +32,10 @@ def procesar(update: Update, context: CallbackContext):
             "3. Ver promociones y precios\n"
             "4. Descargar contenidos útiles\n"
             "5. Hablar con un asesor humano\n"
-            "Digita: 1,2,3,4 o 5 segun lo que necesitas"
+            "Digita: 1,2,3,4 o 5 según lo que necesitas"
         )
 
-    if texto in ["menú","menu", "inicio"]:
+    if texto in ["menú", "menu", "inicio"]:
         usuarios[chat_id]["estado"] = "inicio"
         update.message.reply_text(mostrar_menu())
     elif estado == "inicio":
@@ -123,19 +124,23 @@ def procesar(update: Update, context: CallbackContext):
     elif estado == "esperando_contacto":
         update.message.reply_text("Gracias. Hemos recibido tus datos. Un asesor se pondrá en contacto contigo. ¿Deseas volver al menú?")
 
-def main():
+# Flask app para Render
+app = Flask(__name__)
+
+@app.route('/')
+def home():
+    return 'Bot MotorVentas activo 🚗'
+
+# Iniciar bot y servidor
+def run_bot():
     updater = Updater(TOKEN, use_context=True)
     dp = updater.dispatcher
-
     dp.add_handler(CommandHandler("start", start))
     dp.add_handler(MessageHandler(Filters.text & ~Filters.command, procesar))
-
     updater.start_polling()
     updater.idle()
 
 if __name__ == '__main__':
-    main()
-
-#####
-
-
+    threading.Thread(target=run_bot).start()
+    port = int(os.environ.get('PORT', 5000))
+    app.run(host='0.0.0.0', port=port)
